@@ -1,3 +1,10 @@
 module.exports = {
-	assets: ['react-native-vector-icons']
+  project: {
+    android: {
+      sourceDir: './android',
+      appName: 'app',
+      packageName: 'com.adpyke.druidshape',
+    },
+  },
+  assets: ['react-native-vector-icons'],
 };
