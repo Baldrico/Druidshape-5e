@@ -2,6 +2,7 @@ import React from 'react';
 import r from 'rnss';
 import PropTypes from 'prop-types';
 import { View, Picker, Text } from 'react-native';
+import { TextPropTypes } from 'deprecated-react-native-prop-types';
 
 export default function PickerAndroid(props) {
 	const options = props.options.map(({ value, text }) => (
@@ -36,9 +37,9 @@ PickerAndroid.propTypes = {
 	disabled: PropTypes.bool,
 	mode: PropTypes.string,
 	prompt: PropTypes.string,
-	style: Text.propTypes.style,
-	itemStyle: Text.propTypes.style,
-	containerStyle: Text.propTypes.style
+	style: TextPropTypes ? TextPropTypes.style : PropTypes.any,
+	itemStyle: TextPropTypes ? TextPropTypes.style : PropTypes.any,
+	containerStyle: TextPropTypes ? TextPropTypes.style : PropTypes.any
 };
 
 const containerStyle = r`br 4; bw 1; p 0; m 0`;

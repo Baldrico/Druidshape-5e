@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Text } from 'react-native';
+import { TextPropTypes } from 'deprecated-react-native-prop-types';
 import r from 'rnss';
 
 export const B = props => <Text style={[styles.bold, props.style]}>{props.children}</Text>;
@@ -10,7 +11,7 @@ export const BI = props => (
 );
 B.propTypes = I.propTypes = BI.propTypes = {
 	children: PropTypes.node,
-	style: Text.propTypes.style
+	style: TextPropTypes ? TextPropTypes.style : PropTypes.any
 };
 
 const styles = {

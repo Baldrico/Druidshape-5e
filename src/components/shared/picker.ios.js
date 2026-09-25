@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Animated, View, TouchableOpacity, Text, Picker } from 'react-native';
+import { TextPropTypes } from 'deprecated-react-native-prop-types';
 import r from 'rnss';
 
 const UIPICKER_HEIGHT = 216;
@@ -105,10 +106,10 @@ CollapsiblePickerIOS.propTypes = {
 	disabled: PropTypes.bool,
 	mode: PropTypes.string,
 	prompt: PropTypes.string,
-	style: Text.propTypes.style,
-	itemStyle: Text.propTypes.style,
-	containerStyle: Text.propTypes.style,
-	containerStyleOpen: Text.propTypes.style
+	style: TextPropTypes ? TextPropTypes.style : PropTypes.any,
+	itemStyle: TextPropTypes ? TextPropTypes.style : PropTypes.any,
+	containerStyle: TextPropTypes ? TextPropTypes.style : PropTypes.any,
+	containerStyleOpen: TextPropTypes ? TextPropTypes.style : PropTypes.any
 };
 
 const styles = {
