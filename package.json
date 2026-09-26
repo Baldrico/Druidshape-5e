@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-clipboard/clipboard": "^1.16.3",
     "@react-native-community/viewpager": "^5.0.0",
+    "@react-native-picker/picker": "^2.11.4",
     "flyd": "^0.2.8",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",

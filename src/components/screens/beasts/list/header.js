@@ -109,14 +109,17 @@ export const ExtendedHeader = ({ navigation, screenProps }) => {
 				opened={isFiltering}
 				onBackdropPress={() => navigation.setParams({ isFiltering: false })}
 			>
-				<MenuTrigger>
-					<ToggleIconButton
-						icon={icon('options')}
-						active={Object.values(filters).filter(v => v).length > 0}
-						activeColor={r.vars().headerTextColor}
-						inactiveColor={r.vars().headerColorLight}
-						onToggle={() => navigation.setParams({ isFiltering: !isFiltering })}
-					/>
+				<MenuTrigger
+					onPress={() => navigation.setParams({ isFiltering: !isFiltering })}
+				>
+					<View pointerEvents="none">
+						<ToggleIconButton
+							icon={icon('options')}
+							active={Object.values(filters).filter(v => v).length > 0}
+							activeColor={r.vars().headerTextColor}
+							inactiveColor={r.vars().headerColorLight}
+						/>
+					</View>
 				</MenuTrigger>
 				<MenuOptions customStyles={menuStyles().menuOptions}>
 					<MenuOption disabled>
