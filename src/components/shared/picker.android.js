@@ -1,12 +1,22 @@
 import React from 'react';
 import r from 'rnss';
 import PropTypes from 'prop-types';
-import { View, Picker, Text } from 'react-native';
+import { View, Text } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { TextPropTypes } from 'deprecated-react-native-prop-types';
 
 export default function PickerAndroid(props) {
+	const textColor = r.vars().textColor || '#000000';
+	const cardColor = r.vars().cardColor || '#ffffff';
+
 	const options = props.options.map(({ value, text }) => (
-		<Picker.Item key={value} value={value} label={text} />
+		<Picker.Item
+			key={value}
+			value={value}
+			label={text}
+			color={textColor}
+			style={{ backgroundColor: cardColor, color: textColor }}
+		/>
 	));
 
 	return (
@@ -18,7 +28,8 @@ export default function PickerAndroid(props) {
 				mode={props.mode}
 				prompt={props.prompt}
 				itemStyle={props.itemStyle}
-				style={props.style}
+				style={[{ color: textColor, backgroundColor: cardColor }, props.style]}
+				dropdownIconColor={textColor}
 			>
 				{options}
 			</Picker>

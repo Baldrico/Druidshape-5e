@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Platform, View } from 'react-native';
+import { Platform, View, NativeModules } from 'react-native';
 import r from 'rnss';
 import InputScrollView from 'react-native-input-scroll-view';
 import { Button } from 'react-native-elements';
@@ -14,6 +14,13 @@ import { icon } from '../../../../api/util';
 import buttonStyles from '../../../../styles/buttons';
 
 import { Form, getStruct, getOptions } from './form';
+
+const getAndroidNavBarHeight = () => {
+	if (Platform.OS === 'android' && NativeModules.NavBarModule) {
+		return NativeModules.NavBarModule.navigationBarHeight || 0;
+	}
+	return 0;
+};
 
 export default class HomebrewDetailsScreen extends React.Component {
 	static propTypes = {
@@ -33,7 +40,7 @@ export default class HomebrewDetailsScreen extends React.Component {
 				size={r.vars().iconSizeLarge}
 				onPress={() =>
 					AlertDelete(navigation.getParam('edit'), screenProps.actions, () =>
-						navigation.dismiss()
+						navigation.goBack(null)
 					)
 				}
 			/>
@@ -59,6 +66,7 @@ export default class HomebrewDetailsScreen extends React.Component {
 	}
 
 	get styles() {
+		const navBarHeight = getAndroidNavBarHeight();
 		return {
 			container: r`
 				f 1
@@ -68,7 +76,10 @@ export default class HomebrewDetailsScreen extends React.Component {
 			`,
 			form: r`f 1`,
 			formContent: r`p 10`,
-			bottomButton: r`h ${r.vars().bottomButtonHeight + getBottomSpace()}`,
+			bottomButton: {
+				height: r.vars().bottomButtonHeight + getBottomSpace() + (Platform.OS === 'android' ? navBarHeight : 0),
+				paddingBottom: Platform.OS === 'android' ? navBarHeight : 0
+			},
 			copyButton: r`border-color $formButtonColor`,
 			copyButtonTitle: r`c $formButtonColor`,
 			copyButtonContainer: r`mb 5`,
@@ -85,7 +96,7 @@ export default class HomebrewDetailsScreen extends React.Component {
 			} else {
 				actions.addHomebrew(beast);
 			}
-			this.props.navigation.dismiss();
+			this.props.navigation.goBack(null);
 		}
 	}
 
@@ -145,7 +156,7 @@ export default class HomebrewDetailsScreen extends React.Component {
 						containerStyle={[buttonTheme.button, buttonTheme.cancelButton]}
 						buttonStyle={styles.bottomButton}
 						titleStyle={buttonTheme.cancelButtonTitle}
-						onPress={() => this.props.navigation.dismiss()}
+						onPress={() => this.props.navigation.goBack(null)}
 					/>
 					<Button
 						title="Save"

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Platform, NativeModules } from 'react-native';
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import r from 'rnss';
@@ -31,13 +32,20 @@ const tabBarOnPress = ({ navigation, defaultHandler }) => {
 };
 
 const TabBarComponent = props => {
+	const navBarHeight =
+		Platform.OS === 'android' && NativeModules.NavBarModule
+			? NativeModules.NavBarModule.navigationBarHeight || 0
+			: 0;
+
 	return (
 		<BottomTabBar
 			activeTintColor={r.vars().tabBarActiveTintColor}
 			inactiveTintColor={r.vars().tabBarInactiveTintColor}
 			style={{
 				backgroundColor: r.vars().tabBarColor,
-				borderTopColor: r.vars().dividerColor
+				borderTopColor: r.vars().dividerColor,
+				paddingBottom: navBarHeight,
+				height: 50 + navBarHeight
 			}}
 			{...props}
 		/>

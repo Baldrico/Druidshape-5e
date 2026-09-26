@@ -68,7 +68,7 @@ export const range = (start, end) => {
 	return arr;
 };
 
-export const icon = name => (Platform.OS === 'ios' ? 'ios-' : 'md-') + name;
+export const icon = name => name;
 
 export const withCollapsible = (main, collapse, height = 60) =>
 	_withCollapsible(main, {

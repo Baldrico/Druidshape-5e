@@ -33,7 +33,7 @@ export default function ModalDropdown({ items, selected, onSelect, style }) {
 				<View style={[styles.dropdown, style]}>
 					<Text style={styles.text}>{getOptionText(selected)}</Text>
 					<Icon
-						name="ios-arrow-down"
+						name={icon('chevron-down')}
 						size={r.vars().fontSizeMedium}
 						color={r.vars().headerTextColor}
 					/>

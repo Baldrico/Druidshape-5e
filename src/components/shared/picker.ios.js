@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Animated, View, TouchableOpacity, Text, Picker } from 'react-native';
+import { Animated, View, TouchableOpacity, Text } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { TextPropTypes } from 'deprecated-react-native-prop-types';
 import r from 'rnss';
 
