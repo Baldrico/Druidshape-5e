@@ -105,6 +105,68 @@ if (ReactNative.BackHandler) {
 	}
 }
 
+// Polyfill Keyboard.removeListener and Keyboard.removeEventListener
+if (ReactNative.Keyboard) {
+	const kbListeners = new Map();
+	const originalKbAdd = ReactNative.Keyboard.addListener;
+	if (originalKbAdd) {
+		ReactNative.Keyboard.addListener = function (type, handler) {
+			const sub = originalKbAdd.call(ReactNative.Keyboard, type, handler);
+			kbListeners.set(handler, sub);
+			return sub;
+		};
+	}
+	if (!ReactNative.Keyboard.removeListener) {
+		ReactNative.Keyboard.removeListener = function (type, handler) {
+			const sub = kbListeners.get(handler);
+			if (sub && sub.remove) {
+				sub.remove();
+				kbListeners.delete(handler);
+			}
+		};
+	}
+	if (!ReactNative.Keyboard.removeEventListener) {
+		ReactNative.Keyboard.removeEventListener = function (type, handler) {
+			const sub = kbListeners.get(handler);
+			if (sub && sub.remove) {
+				sub.remove();
+				kbListeners.delete(handler);
+			}
+		};
+	}
+}
+
+// Polyfill DeviceEventEmitter.removeListener and DeviceEventEmitter.removeEventListener
+if (ReactNative.DeviceEventEmitter) {
+	const emitterListeners = new Map();
+	const originalEmitterAdd = ReactNative.DeviceEventEmitter.addListener;
+	if (originalEmitterAdd) {
+		ReactNative.DeviceEventEmitter.addListener = function (type, handler, context) {
+			const sub = originalEmitterAdd.call(ReactNative.DeviceEventEmitter, type, handler, context);
+			emitterListeners.set(handler, sub);
+			return sub;
+		};
+	}
+	if (!ReactNative.DeviceEventEmitter.removeListener) {
+		ReactNative.DeviceEventEmitter.removeListener = function (type, handler) {
+			const sub = emitterListeners.get(handler);
+			if (sub && sub.remove) {
+				sub.remove();
+				emitterListeners.delete(handler);
+			}
+		};
+	}
+	if (!ReactNative.DeviceEventEmitter.removeEventListener) {
+		ReactNative.DeviceEventEmitter.removeEventListener = function (type, handler) {
+			const sub = emitterListeners.get(handler);
+			if (sub && sub.remove) {
+				sub.remove();
+				emitterListeners.delete(handler);
+			}
+		};
+	}
+}
+
 // Polyfill UIManager.dispatchViewManagerCommand to handle null reactTags safely
 if (ReactNative.UIManager) {
 	const origDispatch = ReactNative.UIManager.dispatchViewManagerCommand;

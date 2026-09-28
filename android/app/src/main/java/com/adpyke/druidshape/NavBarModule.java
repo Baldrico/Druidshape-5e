@@ -1,6 +1,7 @@
 package com.adpyke.druidshape;
 
 import android.content.res.Resources;
+import android.provider.Settings;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.module.annotations.ReactModule;
@@ -31,10 +32,19 @@ public class NavBarModule extends ReactContextBaseJavaModule {
             Resources resources = context.getResources();
             float density = resources.getDisplayMetrics().density;
 
-            int navResId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-            if (navResId > 0) {
-                int px = resources.getDimensionPixelSize(navResId);
-                navBarHeightDp = Math.round(px / density);
+            int navMode = 0;
+            try {
+                navMode = Settings.Secure.getInt(context.getContentResolver(), "navigation_mode", 0);
+            } catch (Exception e) {
+                navMode = 0;
+            }
+
+            if (navMode != 2) { // 3-button or 2-button navigation mode
+                int navResId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+                if (navResId > 0) {
+                    int px = resources.getDimensionPixelSize(navResId);
+                    navBarHeightDp = Math.round(px / density);
+                }
             }
 
             int statusResId = resources.getIdentifier("status_bar_height", "dimen", "android");
